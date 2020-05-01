@@ -1,0 +1,11 @@
+[Unit]
+Description=Trigger git-backup daily
+
+[Timer]
+OnCalendar=*-*-* 04:00:00
+Persistent=true
+OnBootSet=15m
+RandomizedDelaySec=15m
+
+[Install]
+WantedBy=timers.target

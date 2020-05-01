@@ -1,0 +1,10 @@
+[Unit]
+Description=Git repositories backup service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/local/bin/git-backup.sh %i.env
+Nice=19
+
+#[Install]
+#WantedBy=multi-user.target
