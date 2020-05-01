@@ -23,22 +23,21 @@
 
    #### Usage:
 
-   ```bash
-    git-backup.sh <git-repositories-containing-dir> <output-backup-dir>
-    git-backup.sh <configfilename> # The name of .env file stored in $HOME/.git-backup
-   ```
+```bash
+git-backup.sh <git-repositories-containing-dir> <output-backup-dir>
+git-backup.sh <configfilename> # The name of .env file stored in $HOME/.git-backup
+```
 
 
 ## Installing Git-Backup with systemd timers
 
-    ```bash
-        ln -s /path/to/repo/git-backup.sh /usr/local/bin/
-        mkdir -p ~/.config/systemd/user ~/.git-backup
-        cp dot.git-backup/example.env ~/.git-backup/myexample.env # Choose the name of your configuation (here "myexample")
-        vim ~/.git-backup/myexample.env # Modify the env example file at your like
-        ln -s /phat/to/repo/git-backup@.service ~/.config/systemd/user
-        ln -s /phat/to/repo/git-backup@.timer ~/.config/systemd/user
-        systemctl enable --user git-backup@myexample.timer # Enable timer for each of the configurations (here "myexample")
-        systemctl start --user git-backup@myexample.timer # Start the timer to avoid reboot
-    ```
-
+```bash
+ln -s /path/to/repo/git-backup.sh /usr/local/bin/
+mkdir -p ~/.config/systemd/user ~/.git-backup
+cp dot.git-backup/example.env ~/.git-backup/myexample.env # Choose the name of your configuation (here "myexample")
+vim ~/.git-backup/myexample.env # Modify the env example file at your like
+ln -s /phat/to/repo/git-backup@.service ~/.config/systemd/user
+ln -s /phat/to/repo/git-backup@.timer ~/.config/systemd/user
+systemctl enable --user git-backup@myexample.timer # Enable timer for each of the configurations (here "myexample")
+systemctl start --user git-backup@myexample.timer # Start the timer to avoid reboot
+```
