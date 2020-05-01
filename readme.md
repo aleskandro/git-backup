@@ -7,7 +7,7 @@
    I wrote it for personal use. I use to sync my workstations with a remote server, which is in charge of
    exploiting the proper backup strategy and rotation scheme over different kinds of storage.
    However, "(r)syncing" a lot of git repositories, full of very small files, over the network,
-   can have huge overheads (e.g., IO overhead due to the stat() system call).
+   can have huge overheads (e.g., IO overhead due to the stat() system call, network encryption...).
 
    Git remotes can lack different data from your local repositories:
    secrets/env files, e.g., stashed or not staged files, local branches/commits.
