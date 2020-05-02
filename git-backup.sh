@@ -46,7 +46,6 @@ fi
 
 echo $CONTAINER_DIR
 echo $OUTPUT_DIR
-exit
 
 for REPO in $(ls -d $CONTAINER_DIR/*/); do
     echo "Working on $REPO"
