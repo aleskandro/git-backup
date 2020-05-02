@@ -46,16 +46,19 @@ fi
 
 echo $CONTAINER_DIR
 echo $OUTPUT_DIR
-
-for REPO in $(ls -d $CONTAINER_DIR/*/); do
-    echo "Working on $REPO"
-    REPO_NAME=$(basename $REPO)
+ls -1d "$CONTAINER_DIR"/*/ | while read REPO
+do
+    echo "--- Working on $REPO"
+    REPO_NAME=$(basename "$REPO")
     BACKUP_FILE="$OUTPUT_DIR/$REPO_NAME.tar.gz"
-    LAST_EDIT_TIME=$(find $REPO -printf "%T@\n" | sort | tail -1 | cut -f1 -d.)
-    LAST_BCKP_TIME=$(stat -c "%Y" $BACKUP_FILE 2>/dev/null || echo "-1" | cut -f1 -d. )
-    echo "Repository last edit: $(date -d @$LAST_EDIT_TIME)"
-    echo "Repository last backup: $(date -d @$LAST_BCKP_TIME)"
-    [ $LAST_BCKP_TIME -lt $LAST_EDIT_TIME ] && tar -cjpf $BACKUP_FILE -C $CONTAINER_DIR $REPO_NAME &
+    LAST_EDIT_TIME=$(find "$REPO" -printf "%T@\n" | sort | tail -1 | cut -f1 -d.)
+    LAST_BCKP_TIME=$(stat -c "%Y" "$BACKUP_FILE" 2>/dev/null || echo "-1" | cut -f1 -d. )
+    echo "-|----- Repository last edit: $(date -d @$LAST_EDIT_TIME)"
+    echo "-|----- Repository last backup: $(date -d @$LAST_BCKP_TIME)"
+    echo -n "--- "
+    [ $LAST_BCKP_TIME -lt $LAST_EDIT_TIME ] && echo "Creating new backup for $REPO_NAME" || echo "Backup already updated"
+    echo "---------"
+    [ $LAST_BCKP_TIME -lt $LAST_EDIT_TIME ] && tar -cjpf "$BACKUP_FILE" -C "$CONTAINER_DIR" "$REPO_NAME" &
 done
 
 wait
