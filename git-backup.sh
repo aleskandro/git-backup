@@ -29,15 +29,15 @@
 
 function fatal {
     echo $1 1>&2
-    exit -1
+    exit 1
 }
 
 if [[ "$1" =~ ".env" ]]; then
-    . $HOME/.git-backup/$1 || exit -1
+    . $HOME/.git-backup/$1 || exit 1
 else
     test -n "$1" -a -n "$2" || fatal "git-backup | Usage: git-backup <git-repositories-containing-dir> <output-backup-dir>"
-    test -d "$1" || fatal "git-backup | You must supply an exsistent directory path containing git repositories" 
-    test -d "$2" || fatal "git-backup | You must supply an exsistent directory path for output backup storage"
+    test -d "$1" || fatal "git-backup | You must supply an existent directory path containing git repositories"
+    test -d "$2" || fatal "git-backup | You must supply an existent directory path for output backup storage"
     test -d "$1/.git" && fatal "git-backup | You provided a git repository. git-backup expects its parent dir"
 
     CONTAINER_DIR=$1
@@ -56,9 +56,8 @@ do
     echo "<7>-|----- Repository last backup: $(date -d @$LAST_BCKP_TIME)"
     [ $LAST_BCKP_TIME -lt $LAST_EDIT_TIME ] && echo "<1>--- Creating new backup for $REPO_NAME" || echo "<5>--- Backup already updated"
     echo "<6>---------"
-    [ $LAST_BCKP_TIME -lt $LAST_EDIT_TIME ] && tar -cjpf "$BACKUP_FILE" -C "$CONTAINER_DIR" "$REPO_NAME" &
+    echo tar -cjpf "$BACKUP_FILE" -C "$CONTAINER_DIR" "$REPO_NAME"
+    [ $LAST_BCKP_TIME -lt $LAST_EDIT_TIME ] && tar -cjpf "$BACKUP_FILE" -C "$CONTAINER_DIR" "$REPO_NAME"
 done
 
 wait
-
-
